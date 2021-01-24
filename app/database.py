@@ -26,20 +26,6 @@ class Database():
         with open(path, 'wb') as f:
             pickle.dump(_data, f)
 
-    def migrate(self, items):
-        data = self.load_data(self.path)['data']
-        _data = {}
-        for code, item in items.items():
-            name = item['name']
-            try:
-                dd = data[name].copy()
-                dd['name'] = name
-                _data[code] = dd
-            except:
-                continue
-        print('len old data={}, len new data = {}, len items = {}'.format(len(data), len(_data), len(items)))
-        self.save_data(_data, self.path)
-
     def bulk_put(self, items):
         wn = self.get_week_format()
         data = self.load_data(self.path)['data']

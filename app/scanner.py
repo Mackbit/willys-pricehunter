@@ -113,7 +113,6 @@ def update(path):
     db = Database(path)
     willys = Willys()
     items = willys.scan(categories)
-    db.migrate(items)
     db.bulk_put(items)
 
 update('/home/ubuntu/database/willysdata.p')
