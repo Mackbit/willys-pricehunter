@@ -1,0 +1,30 @@
+<head>
+    <title>Login | Foodtracker</title>
+</head>
+
+{% block include_list %}
+<link rel=stylesheet type=text/css href="/static/login-style.css">
+{% endblock %}
+
+{% block body %}
+
+{% if context.error %}<p class="error" style="color: #ffdd26; font-size: 18px;"><strong>Error:</strong> {{ context.error | safe }}
+{% endif %}
+
+{% if context.info %}<p class="info" style="color: #00e12e; font-size: 18px;"><strong>Info:</strong> {{ info }}
+{% endif %}
+
+<div class = "container" style="width:600px; position:absolute; left:50%; margin-left:-300px; top:20%;">
+<form class='login' style='padding:15px; background-color: #f9f9f9;'  method=post>
+  <dl>
+<label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>	<button type="submit">Login</button>
+    </dt>
+  </dl>
+
+</form>
+</div>
+{% endblock %}
+

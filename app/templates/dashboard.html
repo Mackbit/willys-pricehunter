@@ -1,0 +1,63 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.min.js"></script>
+
+
+<div>
+<table><tr><td><img src="/img/willys_logo.svg" style="height:22px;"></td><td> </td><td><h2 style="padding-top: 25px;"> prices {{context.this_week}}</h2></td></tr></table>
+
+Below table shows all product at Willys. You can click on a table header in order to sort the column data in asc/desc order. You can also use the search feature to filter out data based on keywords.
+    <p style="color: #555; font-size: 13px;">Last updated: {{context.last_update}}</p>
+
+</div>
+
+<div>
+    <table id="example" class="display" data-order="[[ 3, &quot;desc&quot; ]]" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Normal price</th>
+                    <th>Current price</th>
+                    <th>Savings</th>
+                    <th>Savings (%)</th>
+                    <th>savingCnt</th>
+                    <th>availableCnt</th>
+                    <th>flucCnt</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Normal price</th>
+                    <th>Current price</th>
+                    <th>Savings</th>
+                    <th>Savings (%)</th>
+                    <th>savingCnt</th>
+                    <th>availableCnt</th>
+                    <th>flucCnt</th>
+                    <th>Category</th>
+                </tr>
+            </tfoot>
+        </table>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ajax": "paginating",
+        "aoColumns": [
+            null,
+            { "orderSequence": [ "desc", "asc", "asc" ] },
+            { "orderSequence": [ "desc", "asc", "asc" ] },
+            { "orderSequence": [ "desc", "asc", "asc" ] },
+            { "orderSequence": [ "desc", "asc", "asc" ] },
+            { "orderSequence": [ "desc", "asc", "asc" ] },
+            null,
+            null,
+            null
+        ]
+    } );
+} );
+</script>
