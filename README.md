@@ -4,10 +4,11 @@ The Willys pricehunter tracks food prices and discounts over time. The project c
 
 # Deploy
 
-1. Clone repo to /opt/
-2. `$ mkdir /home/ubuntu/database`
-3. Run scanner to initialize database: `$ python3 /opt/willys-pricehunter/app/scanner.py`
-4. Run frontend: `$ sh /opt/willys-pricehunter/run.sh`
+1. Install docker: `$ apt install docker.io`
+2. Clone repo to /opt/
+3. `$ mkdir /home/ubuntu/database`
+4. Run scanner to initialize database: `$ python3 /opt/willys-pricehunter/app/scanner.py`
+5. Run frontend: `$ sh /opt/willys-pricehunter/run.sh`
 
 To get continuous price history, the scanner can be executed once per day by setting a crontab job:
 
