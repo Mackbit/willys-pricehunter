@@ -1,6 +1,6 @@
 # Willys pricehunter
 
-The Willys pricehunter project consists of a toy database (a json dump) that is created and updated by `scanner.py` that fetches the latest prices of all Willys products. The data is visualized in a fastapi frontend. 
+The Willys pricehunter project consists of a toy database (a json dict dump) that is created and updated by `scanner.py`. The scanner fetches the latest prices of all Willys products and keep track of price changes over each new week. All the price data is visualized in the fastapi frontend `main.py`. 
 
 # Deploy
 
