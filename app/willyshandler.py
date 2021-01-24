@@ -26,6 +26,7 @@ class Willys:
                 break
             index += 1
             _url = url + '&page={}'.format(index)
+            time.sleep(0.5)
         return data
 
 
