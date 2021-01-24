@@ -1,6 +1,6 @@
 # Willys pricehunter
 
-The Willys pricehunter tracks food prices and discounts over time. The project consists of a toy database (a json dict dump) that is created and updated by `scanner.py`. The scanner fetches the latest prices of all Willys products and keeps track of price changes over each new week. All price data is visualized in the fastapi frontend `main.py`. 
+The pricehunter tracks food prices and discounts over time for the Swedish foodstore `Willys`. The project consists of a toy database (a json dict dump) that is created and updated by `scanner.py`. The scanner fetches the latest prices of all Willys products and keeps track of price changes over each new week. All price data is visualized in the fastapi frontend `main.py`. 
 
 See below screenshot examples for 1) dashboard overview and 2) price history details for some 1st class tomatoes.
 
