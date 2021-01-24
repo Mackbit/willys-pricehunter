@@ -11,6 +11,7 @@ class Willys:
         index = 0
         data = []
         _url = url
+        retry_count = 0
         while True:
             print('Fetching URI={}'.format(_url))
             try:
@@ -18,8 +19,12 @@ class Willys:
                 _data = json.loads(r.text)
             except:
                 print('Failing to fetch data, sleeping 5 seconds...')
+                retry_count += 1
                 time.sleep(5)
+                if retry_count == 10:
+                    exit(1)
                 continue
+            retry_count = 0
             nop = _data['pagination']['numberOfPages']
             data += _data['results']
             if index == nop-1:
