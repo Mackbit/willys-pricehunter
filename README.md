@@ -10,6 +10,8 @@ See below screenshot examples for 1) dashboard overview and 2) price history det
 
 # Deploy
 
+Project can easily be deployed on a Ubuntu server by following below steps. 
+
 1. Install docker: `$ apt install docker.io`
 2. Clone repo to /opt/
 3. `$ mkdir /home/ubuntu/database`
@@ -21,3 +23,11 @@ To get continuous price history, the scanner can be executed once per day by set
 ```
 0 7 * * * /usr/bin/python3 /opt/willys-pricehunter/app/scanner.py
 ```
+
+# Possible future improvements
+
+* Convert toy database to a real database such as PostgreSQL
+* Add sign-up user form
+* Put user data in database
+* Make it possible to add products to a favorite list
+* Get email notifications when there is a discount on a product in a tracking list
