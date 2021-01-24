@@ -27,6 +27,7 @@ To get continuous price history, the scanner can be executed once per day by set
 # Possible future improvements
 
 * Convert toy database to a real database such as PostgreSQL
+* Make `scanner` a separare micro-service
 * Add sign-up user form
 * Put user data in database
 * Make it possible to add products to a favorite list
