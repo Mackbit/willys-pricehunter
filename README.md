@@ -8,7 +8,7 @@ See below screenshot examples for 1) dashboard overview and 2) price history det
 ![Alt text](/images/price_history.png?raw=true "Price history")
 
 
-# Deploy
+## Deploy
 
 Project can easily be deployed on a Ubuntu server by following below steps. 
 
@@ -24,7 +24,7 @@ To get continuous price history, the scanner can be executed once per day by set
 0 7 * * * /usr/bin/python3 /opt/willys-pricehunter/app/scanner.py
 ```
 
-# Possible future improvements
+## Possible future improvements
 
 * Convert toy database to a real database such as PostgreSQL
 * Make `scanner` a separare micro-service
