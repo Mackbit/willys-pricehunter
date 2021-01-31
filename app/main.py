@@ -185,7 +185,7 @@ async def product(request: Request, code: str, user_id: Optional[str] = Cookie(N
 
 
 @app.get('/paginating/{filtering}')
-async def paginating(request: Request, filtering: str, draw: int, start: int, length: int):
+async def paginating(request: Request, filtering: str, draw: int, start: int, length: int, user_id: Optional[str] = Cookie(None)):
     headers = ['name', 'price', 'currentPrice', 'savingsAmount', 'savingsPercent', 'savingCnt', 'availableCnt', 'flucCnt', 'category']
     qq = str(request.query_params)
     qq = urllib.parse.unquote(qq)
@@ -197,16 +197,20 @@ async def paginating(request: Request, filtering: str, draw: int, start: int, le
     search = _q['search[value]'].lower()
     sort_index = int(_q['order[0][column]'])
     _order = _q['order[0][dir]']
-    rows, datalen, datasorted = _paginate(start, length, headers[sort_index], _order, search, headers, filtering)
+    rows, datalen, datasorted = _paginate(start, length, headers[sort_index], _order, search, headers, user_id, filtering)
     resp = {"draw": draw, "recordsTotal":datalen,"recordsFiltered":datasorted, "data": rows}
     return resp
 
 
-def _paginate(offset, limit, sort, order, search, headers, filtering):
-    data = db.load_data(db.path)['data']
+def _paginate(offset, limit, sort, order, search, headers, user_id, filtering):
+    _db = db.load_data(db.path)
+    data = _db['data']
     data_len = len(data)
     _data = []
     for code, block in data.items():
+        if filtering == 'favorite':
+            if not code in _db['users'][user_id]:
+                continue
         dd = block.copy()
         name = dd['name']
         dd['category'] = block['category'].split('/')[0]
