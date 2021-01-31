@@ -113,7 +113,7 @@ async def favorite(request: Request, action: str, code: str, user_id: Optional[s
     except:
         favorites = set()
     if action == 'add':
-        favorites |= set(code)
+        favorites |= set([code])
     else:
         favorites.remove(code)
     db.favorites_put(user_id, favorites)
