@@ -22,7 +22,7 @@ class Database():
         return data
 
     def save_data(self, db, path):
-        db['last_update'] = datetime.datetime.now()}
+        db['last_update'] = datetime.datetime.now()
         with open(path, 'wb') as f:
             pickle.dump(db, f)
 
