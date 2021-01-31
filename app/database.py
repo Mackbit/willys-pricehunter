@@ -21,14 +21,15 @@ class Database():
             data = {}
         return data
 
-    def save_data(self, data, path):
-        _data = {'data': data, 'last_update': datetime.datetime.now()}
+    def save_data(self, db, path):
+        db['last_update'] = datetime.datetime.now()}
         with open(path, 'wb') as f:
-            pickle.dump(_data, f)
+            pickle.dump(db, f)
 
     def bulk_put(self, items):
         wn = self.get_week_format()
-        data = self.load_data(self.path)['data']
+        db = self.load_data(self.path)
+        data = db['data'].copy()
         for code, item in items.items():
             if data.get(code, None):
                 data[code]['price'] = item['price']
@@ -47,4 +48,5 @@ class Database():
                 _item = {'price': item['price'], 'comparePrice': item['comparePrice'], 'savingsAmount': item['savingsAmount']}
                 data[code]['history'][wn] = _item.copy()
         print('len of data={}'.format(len(data)))
-        self.save_data(data, self.path)
+        db['data'] = data
+        self.save_data(db, self.path)
