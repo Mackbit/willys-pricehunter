@@ -40,7 +40,7 @@ table.finance-table td {
                 <tr><th>Min history price</th><td>{{context.minPrice}} kr</td></tr>
                 <tr><th>Favorite</th>
                     <td>{% if context.favorite %}
-                        <a href="">Remove</a>
+                        <a href="/favorite/remove/{{context.code}}">Remove</a>
                         {% else %}
                         {% endif %}
                     </td>
