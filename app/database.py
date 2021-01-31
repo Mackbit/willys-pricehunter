@@ -22,9 +22,18 @@ class Database():
         return data
 
     def save_data(self, db, path):
-        db['last_update'] = datetime.datetime.now()
         with open(path, 'wb') as f:
             pickle.dump(db, f)
+
+    def favorites_put(self, user_id: str, favorites: set):
+        db = self.load_data(self.path)
+        users = db.get('users')
+        if users:
+            users[user_id] = favorites
+        else:
+            users = {user_id: favorites}
+        db['users'] = users
+        self.save_data(db, self.path)
 
     def bulk_put(self, items):
         wn = self.get_week_format()
@@ -49,4 +58,5 @@ class Database():
                 data[code]['history'][wn] = _item.copy()
         print('len of data={}'.format(len(data)))
         db['data'] = data
+        db['last_update'] = datetime.datetime.now()
         self.save_data(db, self.path)

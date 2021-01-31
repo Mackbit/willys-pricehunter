@@ -38,6 +38,13 @@ table.finance-table td {
                 <tr><th>Saving count</th><td>{{context.savingsCount}} times</td></tr>
                 <tr><th>Max history price</th><td>{{context.maxPrice}} kr</td></tr>
                 <tr><th>Min history price</th><td>{{context.minPrice}} kr</td></tr>
+                <tr><th>Favorite</th>
+                    <td>{% if context.favorite %}
+                        <a href="">Remove</a>
+                        {% else %}
+                        {% endif %}
+                    </td>
+                </tr>
             </table>
         </td>
         <td>

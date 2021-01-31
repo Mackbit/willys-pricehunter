@@ -102,13 +102,41 @@ def get_history_price_fluctuations(data):
     return count
 
 
+@app.get('/favorite/{action}/{code}')
+async def favorite(request: Request, action: str, code: str, user_id: Optional[str] = Cookie(None)):
+    if not user_id:
+        return RedirectResponse(url=app.url_path_for("login"))
+    code = code.replace('---', '_')
+    _db = db.load_data(db.path)
+    try:
+        favorites = _db['users'][user_id]
+    except:
+        favorites = {}
+    if action == 'add':
+        favorites |= {code}
+    else:
+        favorites.remove(code)
+    db.favorites_put(user_id, favorites)
+    url = '/product/{}'.format(code.replace('_', '---'))
+    response = RedirectResponse(url=url)
+    return response
+
+
 @app.get('/product/{code}', response_class=HTMLResponse)
 async def product(request: Request, code: str, user_id: Optional[str] = Cookie(None)):
     if not user_id:
         return RedirectResponse(url=app.url_path_for("login"))
-    data = db.load_data(db.path)['data']
+    _db = db.load_data(db.path)
+    data = _db['data']
     code = code.replace('---', '_')
     values = data[code]
+
+    favorite = False
+    try:
+        if code in _db['users'][user_id]:
+            favorite = True
+    except:
+        pass
 
     dates = []
     prices = []
@@ -128,6 +156,7 @@ async def product(request: Request, code: str, user_id: Optional[str] = Cookie(N
     savingspercent = round((1 - (values['price'] - values['savingsAmount']) / values['price']) * 100.0, 2)
     values['savingsPercent'] = savingspercent
     values['savingsAmount'] = round(values['savingsAmount'], 2)
+    values['favorite'] = favorite
 
     today = str(datetime.datetime.now()).split(' ')[0]
     if not today == dates[-1]:
