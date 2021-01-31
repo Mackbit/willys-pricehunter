@@ -46,7 +46,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         "processing": true,
         "serverSide": true,
-        "ajax": "paginating",
+        "ajax": "paginating/{{context.filtering}}",
         "aoColumns": [
             null,
             { "orderSequence": [ "desc", "asc", "asc" ] },

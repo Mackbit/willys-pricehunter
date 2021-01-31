@@ -70,11 +70,14 @@ async def logout():
 
 
 @app.get('/dashboard', response_class=HTMLResponse)
-async def dashboard(request: Request, user_id: Optional[str] = Cookie(None)):
+async def dashboard(request: Request, filtering: str = None, user_id: Optional[str] = Cookie(None)):
     if not user_id:
         return RedirectResponse(url=app.url_path_for("login"))
     last_update = str(db.load_data(db.path)['last_update']).split('.')[0]
-    context = {'this_week': db.get_week_format().replace('-', ' - ').replace('W', 'week '), 'last_update': last_update}
+    if not filtering:
+        filtering = 'dashboard'
+    context = {'this_week': db.get_week_format().replace('-', ' - ').replace('W', 'week '), 'last_update': last_update,
+               'filtering': filtering}
     return templates.TemplateResponse("dashboard.html", {"request": request, 'context': context})
 
 
@@ -157,7 +160,6 @@ async def product(request: Request, code: str, user_id: Optional[str] = Cookie(N
     values['savingsPercent'] = savingspercent
     values['savingsAmount'] = round(values['savingsAmount'], 2)
     values['favorite'] = favorite
-    values['favorites'] = _db['users'][user_id]
     values['code'] = code
 
     today = str(datetime.datetime.now()).split(' ')[0]
@@ -182,8 +184,8 @@ async def product(request: Request, code: str, user_id: Optional[str] = Cookie(N
 
 
 
-@app.get('/paginating')
-async def paginating(request: Request, draw: int, start: int, length: int):
+@app.get('/paginating/{filtering}')
+async def paginating(request: Request, filtering: str, draw: int, start: int, length: int):
     headers = ['name', 'price', 'currentPrice', 'savingsAmount', 'savingsPercent', 'savingCnt', 'availableCnt', 'flucCnt', 'category']
     qq = str(request.query_params)
     qq = urllib.parse.unquote(qq)
@@ -195,12 +197,12 @@ async def paginating(request: Request, draw: int, start: int, length: int):
     search = _q['search[value]'].lower()
     sort_index = int(_q['order[0][column]'])
     _order = _q['order[0][dir]']
-    rows, datalen, datasorted = _paginate(start, length, headers[sort_index], _order, search, headers)
+    rows, datalen, datasorted = _paginate(start, length, headers[sort_index], _order, search, headers, filtering)
     resp = {"draw": draw, "recordsTotal":datalen,"recordsFiltered":datasorted, "data": rows}
     return resp
 
 
-def _paginate(offset, limit, sort, order, search, headers):
+def _paginate(offset, limit, sort, order, search, headers, filtering):
     data = db.load_data(db.path)['data']
     data_len = len(data)
     _data = []
