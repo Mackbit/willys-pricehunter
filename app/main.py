@@ -53,7 +53,7 @@ async def login(request: Request, username: str = Form(...), password: str = For
         pass
     if success:
         response = RedirectResponse(url=app.url_path_for("dashboard"), status_code=302)
-        response.set_cookie(key="user_id", value=_username, httponly=True, max_age=1800, expires=1800)
+        response.set_cookie(key="user_id", value=_username, httponly=True, max_age=604800, expires=604800)
         print('User {} {} logged in.'.format(username, _username))
         return response
     else:
