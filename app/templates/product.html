@@ -42,6 +42,7 @@ table.finance-table td {
                     <td>{% if context.favorite %}
                         <a href="/favorite/remove/{{context.code}}">Remove</a>
                         {% else %}
+                        <a href="/favorite/add/{{context.code}}">Add</a>
                         {% endif %}
                     </td>
                 </tr>
