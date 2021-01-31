@@ -157,6 +157,7 @@ async def product(request: Request, code: str, user_id: Optional[str] = Cookie(N
     values['savingsPercent'] = savingspercent
     values['savingsAmount'] = round(values['savingsAmount'], 2)
     values['favorite'] = favorite
+    values['favorites'] = _db['users'][user_id]
     values['code'] = code
 
     today = str(datetime.datetime.now()).split(' ')[0]
